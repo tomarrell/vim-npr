@@ -1,0 +1,52 @@
+*vim-npr.txt* Plugin for resolving Node Path Relative modules in JS
+
+Author: Tom Arrell <https://github.com/tomarrell>
+License: GNU GPL v3.0
+
+INTRODUCTION                                    *vim-npr*
+
+This plugin will attempt to resolve Javascript modules, relative
+to an array of paths defined by the resolve key in a package's
+package.json. It defines extra functionality on the standard
+*gf* file resolution.
+
+By default the plugin will attempt to find a package.json file
+within 5 parent directories relative to the current file when
+*gf* was run.
+
+It support ES, AMD and CommonJS module import types.
+
+CONFIGURATION                                   *vim-npr-targets*
+
+Resolve directories are defined on a project-by-project basis,
+allowing you to specify custom resolution directories uniquely.
+This is done in the projects package.json file. Define a single
+'resolve' key whos value is an array of strings containing the
+directories you would like resolution to occur in. An example
+of such array is below.
+
+  {
+    ...
+    "resolve": ["src", "test"],
+    ...
+  }
+
+If the resolve key does not exist in the package, vim-npr will
+attempt to resolve it in common directories. These are,
+"src", "test", "public" and "lib" by default.
+
+Please note, that defining any resolve key will override the
+defaults.
+
+MAPPINGS                                        *vim-npr-mappings*
+
+The plugin works by extending the original functionality of *gf*.
+You can therefore use it as an extension of your existing workflow.
+An example of usage where * denotes the cursor position:
+
+  Text                                         Command
+  import React from 're*act'                   gf
+  import { Link } from '*react-router'         gf
+  const fetch = require('fet*ch')              gf
+  const Koa = require('koa*')                  gf
+
