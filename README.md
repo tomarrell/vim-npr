@@ -1,5 +1,4 @@
 # Vim-NPR :mag_right:
-
 A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis.
 
 ## License
