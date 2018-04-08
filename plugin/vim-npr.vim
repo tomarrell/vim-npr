@@ -55,7 +55,7 @@ endfunction
 
 " Unmap any user mapped gf functionalities. This is to restore gf
 " when hijacked by another plugin e.g. vim-node
-silent! unmap <buffer> gf
+autocmd FileType javascript silent! unmap <buffer> gf
 
 " Override includeexpr for Javascript buffer.
 " By default vim-node will try to take control.
