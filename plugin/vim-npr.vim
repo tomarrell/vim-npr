@@ -1,53 +1,64 @@
 " Max number of directory levels gf will traverse upwards
 " to find a package.json file.
-let g:find_file_max_levels = 5
+let g:vim_npr_max_levels = 5
+
 " Default file names to try if gf is run on a directory rather than a specific file.
 " Checked in order of appearance. Empty string to check for exact file match first.
-let g:find_file_file_names = ["", ".js", "/index.js"]
+let g:vim_npr_file_names = ["", ".js", "/index.js"]
 
-function! FindFileJS(fname) abort
-  let foundPackage = 0
-  let levels = 0
+" Default resolution directories if 'resolve' key is not found in
+" package.json.
+let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
+
+function! VimNPRFindFile(fname) abort
+  let l:foundPackage = 0
+  let l:levels = 0
 
   " Traverse up directories and attempt to find package.json
-  while foundPackage != 1 && levels < g:find_file_max_levels
-    echo levels
-    let levels = levels + 1
-    let foundPackage = filereadable(expand('%:p'.repeat(':h', levels)) . '/package.json')
+  while l:foundPackage != 1 && l:levels < g:vim_npr_max_levels
+    let l:levels = l:levels + 1
+    let l:foundPackage = filereadable(expand('%:p'.repeat(':h', l:levels)) . '/package.json')
   endwhile
 
-  if foundPackage == 0
-    echo "Failed to find package.json, try increasing the levels."
+  if l:foundPackage == 0
+    echo "Failed to find package.json, try increasing the levels by increasing g:vim_npr_max_levels variable."
     return a:fname
   endif
 
   " Handy paths to package.json and parent dir
-  let packagePath = globpath(expand('%:p'.repeat(':h', levels)), 'package.json')
-  let packageDir = fnamemodify(packagePath, ':h')
+  let l:packagePath = globpath(expand('%:p'.repeat(':h', l:levels)), 'package.json')
+  let l:packageDir = fnamemodify(l:packagePath, ':h')
 
   try
-    let resolveDirs = json_decode(join(readfile(packagePath))).resolve
+    let l:resolveDirs = json_decode(join(readfile(l:packagePath))).resolve
   catch
     echo "Couldn't find 'resolve' key in package.json"
-    return a:fname
+    let l:resolveDirs = g:vim_npr_default_dirs
   endtry
 
-  echo resolveDirs
-
   " Iterate over potential directories and search for the file
-  for dir in resolveDirs
-    let possiblePath = packageDir . "/" . dir . "/" . a:fname
-    echo possiblePath
+  for dir in l:resolveDirs
+    let l:possiblePath = l:packageDir . "/" . dir . "/" . a:fname
 
-    for filename in g:find_file_file_names
+    echo l:possiblePath
+
+    for filename in g:vim_npr_file_names
       if filereadable(possiblePath . filename)
         return possiblePath . filename
       endif
     endfor
   endfor
 
-  " echo "FindFileJS failed to find file specified."
+  echo "VimNPR failed to find file specified."
   return a:fname
 endfunction
 
- set includeexpr=FindFileJS(v:fname)
+" Unmap any user mapped gf functionalities. This is to restore gf
+" when hijacked by another plugin e.g. vim-node
+silent! unmap <buffer> gf
+
+" Override includeexpr for Javascript buffer.
+" By default vim-node will try to take control.
+"
+" au[tocmd] [group] {event} {pat} [nested] {cmd}
+autocmd FileType javascript set includeexpr=VimNPRFindFile(v:fname)
