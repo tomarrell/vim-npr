@@ -9,8 +9,7 @@ let g:vim_npr_file_names = ["", ".js", "/index.js"]
 " A list of file extensions that the plugin will actively work on.
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
 
-" Default resolution directories if 'resolve' key is not found in
-" package.json.
+" Default resolution directories if 'resolve' key is not found in package.json.
 let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
 
 function! VimNPRFindFile(fname) abort
@@ -68,4 +67,4 @@ autocmd FileType javascript silent! unmap <buffer> gf
 " By default vim-node will try to take control.
 "
 " au[tocmd] [group] {event} {pat} [nested] {cmd}
-autocmd FileType javascript,*.css set includeexpr=VimNPRFindFile(v:fname)
+autocmd FileType *.css set includeexpr=VimNPRFindFile(v:fname)
