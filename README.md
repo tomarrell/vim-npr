@@ -1,4 +1,4 @@
-# Vim-NPR :mag_right:
+# Vim-NPR :mag_right::bookmark_tabs:
 A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis. This will allow Vim to resolve modules using `gf`, even when they're using Node Path Relative, or custom resolution directories in your webpack configuration.
 
 ## Installation
