@@ -67,4 +67,6 @@ autocmd FileType javascript silent! unmap <buffer> gf
 " By default vim-node will try to take control.
 "
 " au[tocmd] [group] {event} {pat} [nested] {cmd}
-autocmd FileType *.css set includeexpr=VimNPRFindFile(v:fname)
+autocmd BufEnter *.js,*.jsx,*.css,*.coffee set includeexpr=VimNPRFindFile(v:fname)
+" Clean up after leaving buffer, allows other plugins to take control of include
+autocmd BufLeave *.js,*.jsx,*.css,*.coffee set includeexpr=
