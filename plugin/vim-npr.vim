@@ -6,11 +6,18 @@ let g:vim_npr_max_levels = 5
 " Checked in order of appearance. Empty string to check for exact file match first.
 let g:vim_npr_file_names = ["", ".js", "/index.js"]
 
+" A list of file extensions that the plugin will actively work on.
+let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
+
 " Default resolution directories if 'resolve' key is not found in
 " package.json.
 let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
 
 function! VimNPRFindFile(fname) abort
+  if index(g:vim_npr_file_types, expand("%:e")) == -1
+    return '' " Don't run on filetypes that we don't support
+  endif
+
   let l:foundPackage = 0
   let l:levels = 0
 
