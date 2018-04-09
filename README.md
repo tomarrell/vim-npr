@@ -1,11 +1,11 @@
-# Vim-NPR :mag_right:
+# Vim-NPR :mag_right::bookmark_tabs:
 A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis. This will allow Vim to resolve modules using `gf`, even when they're using Node Path Relative, or custom resolution directories in your webpack configuration.
 
 ## Installation
 Supports Vim-Plug, Vundle, and likely any other vim plugin manager that uses a similar format.
 
-Add the following line to your .vimrc file:
-```vimscript
+Add the following line to your `.vimrc` file:
+```vim
 Plug 'tomarrell/vim-npr'
 ```
 
@@ -25,6 +25,14 @@ If these directories don't exist, or the plugin cannot find the file under the c
 By default, the plugin will resolve the `package.json` by traversing up *5* directories, this number is configurable using the `g:vim_npr_max_levels` variable.
 
 The plugin will be active whenever you enter a buffer with the extension .js, .jsx, .css or .coffee.
+
+Finally, if the exact file name with extension is not provided in the path, the plugin will attempt a list of defaults. These are appended to the path for each match attempt. The default list is:
+
+```vim
+let g:vim_npr_file_names = ["", ".js", "/index.js"]
+```
+
+Note that "" (empty string) and ".js" (plain .js extension) are important to resolve exact files and paths simply omitting the extension respectively. 
 
 ## Usage
 Works with ES, AMD, and CommonJS module definitions.
