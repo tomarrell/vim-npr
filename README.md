@@ -1,5 +1,5 @@
 # Vim-NPR :mag_right:
-A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis.
+A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis. This will allow Vim to resolve modules using `gf`, even when they're using Node Path Relative, or custom resolution directories in your webpack configuration.
 
 ## Installation
 Supports Vim-Plug, Vundle, and likely any other vim plugin manager that uses a similar format.
