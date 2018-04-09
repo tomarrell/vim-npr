@@ -16,7 +16,7 @@ within 5 parent directories relative to the current file when
 
 It support ES, AMD and CommonJS module import types.
 
-CONFIGURATION                                   *vim-npr-targets*
+CONFIGURATION                                   *vim-npr-configuration*
 
 Resolve directories are defined on a project-by-project basis,
 allowing you to specify custom resolution directories uniquely.
@@ -33,10 +33,39 @@ of such array is below.
 
 If the resolve key does not exist in the package, vim-npr will
 attempt to resolve it in common directories. These are,
-"src", "test", "public" and "lib" by default.
+"src", "lib", "test", "public" and "node_modules" by default.
 
 Please note, that defining any resolve key will override the
 defaults.
+
+Max Levels                                      g:vim_npr_max_levels
+
+The maximum number of levels that the plugin will traverse
+upwards in an attempt to resolve the package.json file within
+the project. This can be overridden if your project requires
+larger traversal.
+
+File Names                                      g:vim_npr_file_names
+
+A list of strings that will be appended to the file path for
+each resolution directory check. These will determine which
+file ultimately gets resolved, this can also help modify the
+path to add default file check names, e.g. index.js.
+
+File Types                                      g:vim_npr_file_types
+
+A list of file extensions that the plugin will allow itself to
+execute on. This however won't ensure that the includeexpr
+variable has be set in the current buffer.
+
+Default Dirs                                    g:vim_npr_default_dirs
+
+A list of default directories that the plugin will attempt
+resolution within if it cannot find a resolve key in the
+package.json file within the project. If a package.json file
+is not found at all however, the plugin will throw an error
+as it cannot be certain which directory is the top level for
+the project it is currently within.
 
 MAPPINGS                                        *vim-npr-mappings*
 
