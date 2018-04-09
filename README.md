@@ -26,6 +26,12 @@ By default, the plugin will resolve the `package.json` by traversing up *5* dire
 
 The plugin will be active whenever you enter a buffer with the extension .js, .jsx, .css or .coffee.
 
+Finally, if the exact file name with extension is not provided in the path, the plugin will attempt a list of defaults. These are appended to the path for each match attempt. The default list is:
+
+```vim
+let g:vim_npr_file_names = ["", ".js", "/index.js"]
+```
+
 ## Usage
 Works with ES, AMD, and CommonJS module definitions.
 
