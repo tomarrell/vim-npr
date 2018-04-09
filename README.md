@@ -1,6 +1,23 @@
 # Vim-NPR :mag_right:
 A plugin for sensible Node Path Relative module resolution in Javascript on a project-by-project basis.
 
+## Configuration
+Simlpy add a resolve key to your project's `package.json` file with an array of directories you would like the file to potentially be resolved relative to. The plugin will find this key and resolve your files as per the directories listed. 
+
+If a `package.json` file can be found, however no `resolve` key is present, the plugin will default to the following directories for resolution:
+```
+{
+  ...
+  resolve: ["src", "lib", "test", "public", "node_modules"],
+  ...
+}
+```
+If these directories don't exist, or the plugin cannot find the file under the cursor, the plugin will simply fail to resolve the file.
+
+By default, the plugin will resolve the `package.json` by traversing up *5* directories, this number is configurable using the `g:vim_npr_max_levels` variable.
+
+The plugin will be active whenever you enter a buffer with the extension .js, .jsx, .css or .coffee.
+
 ## Usage
 Works with ES, AMD, and CommonJS module definitions.
 
