@@ -5,11 +5,11 @@ A plugin for sensible Node Path Relative module resolution in Javascript on a pr
 Simply add a resolve key to your project's `package.json` file with an array of directories you would like the file to potentially be resolved relative to. The plugin will find this key and resolve your files as per the directories listed. 
 
 If a `package.json` file can be found, however no `resolve` key is present, the plugin will default to the following directories for resolution:
-```json
+```js
 {
-  ...
-  resolve: ["src", "lib", "test", "public", "node_modules"],
-  ...
+  // ...
+  "resolve": ["src", "lib", "test", "public", "node_modules"],
+  // ...
 }
 ```
 If these directories don't exist, or the plugin cannot find the file under the cursor, the plugin will simply fail to resolve the file.
