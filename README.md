@@ -5,7 +5,7 @@ A plugin for sensible Node Path Relative module resolution in Javascript on a pr
 Supports Vim-Plug, Vundle, and likely any other vim plugin manager that uses a similar format.
 
 Add the following line to your `.vimrc` file:
-```vimscript
+```vim
 Plug 'tomarrell/vim-npr'
 ```
 
@@ -31,6 +31,8 @@ Finally, if the exact file name with extension is not provided in the path, the 
 ```vim
 let g:vim_npr_file_names = ["", ".js", "/index.js"]
 ```
+
+Note that "" (empty string) and ".js" (plain .js extension) are important to resolve exact files and paths simply omitting the extension respectively. 
 
 ## Usage
 Works with ES, AMD, and CommonJS module definitions.
