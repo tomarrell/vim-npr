@@ -4,7 +4,7 @@ A plugin for sensible Node Path Relative module resolution in Javascript on a pr
 ## Installation
 Supports Vim-Plug, Vundle, and likely any other vim plugin manager that uses a similar format.
 
-Add the following line to your .vimrc file:
+Add the following line to your `.vimrc` file:
 ```vimscript
 Plug 'tomarrell/vim-npr'
 ```
