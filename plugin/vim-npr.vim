@@ -4,7 +4,7 @@ let g:vim_npr_max_levels = 5
 
 " Default file names to try if gf is run on a directory rather than a specific file.
 " Checked in order of appearance. Empty string to check for exact file match first.
-let g:vim_npr_file_names = ["", ".js", "/index.js"]
+let g:vim_npr_file_names = ["", ".js", "/index.js", "/index.jsx"]
 
 " A list of file extensions that the plugin will actively work on.
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
