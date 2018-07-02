@@ -16,6 +16,10 @@ let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
 let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
 
 function! VimNPRFindFile(cmd) abort
+  if index(g:vim_npr_file_types, expand("%:e")) == -1
+    return s:print_error("(Error) VimNPR: incorrect file type for to perform resolution within. Please raise an issue at github.com/tomarrell/vim-npr.") " Don't run on filetypes that we don't support
+  endif
+
   " Get file path pattern under cursor
   let l:cfile = expand("<cfile>")
 
@@ -27,10 +31,6 @@ function! VimNPRFindFile(cmd) abort
       return s:edit_file(l:possiblePath, a:cmd)
     endif
   endfor
-
-  if index(g:vim_npr_file_types, expand("%:e")) == -1
-    return s:print_error("(Error) VimNPR: incorrect file type for to perform resolution within.") " Don't run on filetypes that we don't support
-  endif
 
   let l:foundPackage = 0
   let l:levels = 0
