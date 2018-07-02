@@ -79,7 +79,7 @@ function! s:print_error(error)
   echohl ErrorMsg
   echomsg a:error
   echohl NONE
-  let v:errmsg = a:msg
+  let v:errmsg = a:error
 endfunction
 
 " Unmap any user mapped gf functionalities. This is to restore gf
