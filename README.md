@@ -45,6 +45,9 @@ import Header from 'Header/index.js';   // will resolve {NPR}/Header/index.js
 import Header from 'Header/style.css';  // will resolve {NPR}/Header/style.css
 import Button from 'Header/Button';     // will resolve {NPR}/Header/Button/index.js
 
+import Header from '~/components/Header';          // will resolve {NPR}/components/Header/index.js
+import Header from '~/components/Header/index.js'; // will resolve {NPR}/components/Header/index.js
+
 import React from 'react';              // will resolve {NPR}/react/index.js
 import { connect } from 'react-redux';  // will resolve {NPR}/react-redux/lib/
 ```
