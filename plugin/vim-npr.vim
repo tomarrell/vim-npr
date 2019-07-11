@@ -7,7 +7,7 @@ let g:vim_npr_max_levels = 5
 " Checked in order of appearance. Empty string to check for exact file match first.
 " The final two are specifically for matching libraries which define their UMD
 " module resolution in their package.json, and these are the most common.
-let g:vim_npr_file_names = ["", ".js", "/index.js", "/index.jsx", "/src/index.js", "/lib/index.js"]
+let g:vim_npr_file_names = ["", ".js", ".jsx", "/index.js", "/index.jsx", "/src/index.js", "/lib/index.js"]
 
 " A list of file extensions that the plugin will actively work on.
 let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
