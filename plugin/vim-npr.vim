@@ -56,20 +56,13 @@ function! VimNPRFindFile(cmd) abort
     let l:resolveDirs = g:vim_npr_default_dirs
   endtry
 
-  " if path starts with ~ (tilde) replace it with package dir
-  if l:cfile =~ '^\~'
-    let l:possiblePath = substitute(l:cfile, '\~', l:packageDir, 'g')
-
-    for filename in g:vim_npr_file_names
-      if filereadable(possiblePath . filename)
-        return s:edit_file(possiblePath . filename, a:cmd)
-      endif
-    endfor
-  endif
-
   " Iterate over potential directories and search for the file
   for dir in l:resolveDirs
-    let l:possiblePath = l:packageDir . "/" . dir . "/" . l:cfile
+    if l:cfile =~ '^\~'
+      let l:possiblePath = substitute(l:cfile, '\~', l:packageDir . "/" . dir . "/", 'g')
+    else
+      let l:possiblePath = l:packageDir . "/" . dir . "/" . l:cfile
+    endif
 
     for filename in g:vim_npr_file_names
       if filereadable(possiblePath . filename)
