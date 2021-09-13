@@ -1,19 +1,27 @@
 " Vim-NPR
 " Max number of directory levels gf will traverse upwards
 " to find a package.json file.
-let g:vim_npr_max_levels = 5
+if !exists("g:vim_npr_max_levels")
+  let g:vim_npr_max_levels = 5
+endif
 
 " Default file names to try if gf is run on a directory rather than a specific file.
 " Checked in order of appearance. Empty string to check for exact file match first.
 " The final two are specifically for matching libraries which define their UMD
 " module resolution in their package.json, and these are the most common.
-let g:vim_npr_file_names = ["", ".js", ".jsx", "/index.js", "/index.jsx", "/src/index.js", "/lib/index.js"]
+if !exists("g:vim_npr_file_names")
+  let g:vim_npr_file_names = ["", ".js", ".jsx", "/index.js", "/index.jsx", "/src/index.js", "/lib/index.js"]
+endif
 
 " A list of file extensions that the plugin will actively work on.
-let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
+if !exists("g:vim_npr_file_types")
+  let g:vim_npr_file_types = ["js", "jsx", "css", "coffee"]
+endif
 
 " Default resolution directories if 'resolve' key is not found in package.json.
-let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
+if !exists("g:vim_npr_default_dirs")
+  let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
+endif
 
 function! VimNPRFindFile(cmd) abort
   if index(g:vim_npr_file_types, expand("%:e")) == -1
