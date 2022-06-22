@@ -23,7 +23,19 @@ if !exists("g:vim_npr_default_dirs")
   let g:vim_npr_default_dirs = ["src", "lib", "test", "public", "node_modules"]
 endif
 
-function! VimNPRFindFile(cmd) abort
+function! VimNPRFindFile(cmd)
+  return s:FindFile(a:cmd, 'same')
+endfunction
+
+function! VimNPRFindFile_NewWindow(cmd)
+  return s:FindFile(a:cmd, 'window')
+endfunction
+
+function! VimNPRFindFile_NewTab(cmd)
+  return s:FindFile(a:cmd, 'tab')
+endfunction
+
+function! s:FindFile(cmd, place) abort
   if index(g:vim_npr_file_types, expand("%:e")) == -1
     return s:print_error("(Error) VimNPR: incorrect file type for to perform resolution within. Please raise an issue at github.com/tomarrell/vim-npr.") " Don't run on filetypes that we don't support
   endif
@@ -36,7 +48,7 @@ function! VimNPRFindFile(cmd) abort
     let l:possiblePath = expand("%:p:h") . '/' . l:cfile . filename
 
     if filereadable(l:possiblePath)
-      return s:edit_file(l:possiblePath, a:cmd)
+      return s:edit_file(l:possiblePath, a:cmd, a:place)
     endif
   endfor
 
@@ -74,7 +86,7 @@ function! VimNPRFindFile(cmd) abort
 
     for filename in g:vim_npr_file_names
       if filereadable(possiblePath . filename)
-        return s:edit_file(possiblePath . filename, a:cmd)
+        return s:edit_file(possiblePath . filename, a:cmd, a:place)
       endif
     endfor
   endfor
@@ -83,8 +95,20 @@ function! VimNPRFindFile(cmd) abort
   return s:print_error("(Error) VimNPR: Failed to sensibly resolve file in path. If you believe this to be an error, please log an error at github.com/tomarrell/vim-npr.")
 endfunction
 
-function! s:edit_file(path, cmd)
-  exe "edit" . a:cmd . " " . a:path
+
+function! s:edit_file(path, cmd, place)
+  "Open in the same window
+  if a:place == "same"
+    exe "edit" . a:cmd . " " . a:path
+  endif
+  "Open in a new (horizontal) window
+  if a:place == "window"
+    exe "sp" . a:cmd . " " . a:path
+  endif
+  "Open in a new tab
+  if a:place == "tab"
+    exe "tabnew" . a:cmd . " " . a:path
+  endif
 endfunction
 
 function! s:print_error(error)
@@ -102,3 +126,5 @@ autocmd FileType javascript silent! unmap <buffer> <C-w><C-f>
 
 " Automap gf when entering JS/css file types
 autocmd BufEnter *.js,*.jsx,*.css,*.coffee nmap <buffer> gf :call VimNPRFindFile("")<CR>
+autocmd BufEnter *.js,*.jsx,*.css,*.coffee nmap <buffer> <C-w>f :call VimNPRFindFile_NewWindow("")<CR>
+autocmd BufEnter *.js,*.jsx,*.css,*.coffee nmap <buffer> <C-w>gf :call VimNPRFindFile_NewTab("")<CR>
